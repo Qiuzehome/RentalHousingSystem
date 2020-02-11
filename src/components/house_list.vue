@@ -1,0 +1,148 @@
+<template>
+  <div style="background: rgba(0.1, 0.1, 0.1, 0.1);">
+    <Search @searchMsg="searchMsg" @searchMsg0="searchMsg0"></Search>
+    <div class="list">
+      <div class="sort">
+        <span>排序</span>
+        <a href="#" @click="def">默认</a>
+        <a href="#" @click="low">租金从低到高</a>
+        <a href="#" @click="height">租金从高到低</a>
+      </div>
+      <ul>
+        <li v-for="(datas,key) in this.house_list " :key="key" class="li">
+          <House
+            :tittle="datas.tittle"
+            :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
+            :price="datas.price"
+            :id="datas.id"
+            :src="datas.img.split(',')[0]"
+            :phone="datas.phone"
+            :roomTyle="datas.room.split('/')"
+          ></House>
+        </li>
+      </ul>
+    </div>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="this.totalPage"
+      :current-page="this.currentPage"
+      @size-change="handleSizeChange"
+      @prev-click="handlePrev"
+      @next-click="handleNext"
+    ></el-pagination>
+  </div>
+</template>
+<script>
+import { mapState, mapActions,mapMutations } from "vuex";
+import House from "./house";
+import Search from "./search";
+export default {
+  components: {
+    House,
+    Search
+  },
+  data() {
+    return {
+      totalPage: this.house_list && this.house_list.length,
+      currentPage: 1
+    };
+  },
+  methods: {
+    ...mapActions(["filterMsg","keyword"]),
+    ...mapMutations(["reset_house_list"]),
+    handleSizeChange(val) {
+      this.currentPage == val;
+    },
+    handlePrev() {
+      this.currentPage -= 1;
+    },
+    handleNext() {
+      this.currentPage += 1;
+    },
+    def() {
+      this.reset_house_list();
+    },
+    low() {
+      return this.house_list.sort(function(a, b) {
+        return a.price - b.price;
+      });
+    },
+    height() {
+      return this.house_list.sort(function(a, b) {
+        return -(a.price - b.price);
+      });
+    },
+    searchMsg(val) {
+      var price = 0;
+      var minPrice = 0,
+        maxPrice = 0,
+        minRoom = 0,
+        maxRoom = 0,
+        searchMsg = null;
+      if (val.priceLevel == 0) {
+        minPrice = Number.NEGATIVE_INFINITY;
+        maxPrice = Number.POSITIVE_INFINITY;
+      } else if (val.priceLevel == 1000) {
+        minPrice = Number.NEGATIVE_INFINITY;
+        maxPrice = val.priceLevel;
+      } else if (val.priceLevel == 4000) {
+        minPrice = val.priceLevel - 500;
+        maxPrice = Number.POSITIVE_INFINITY;
+      } else {
+        minPrice = val.priceLevel - 500;
+        maxPrice = val.priceLevel;
+      }
+
+      if (val.houseLevel == 0) {
+        minRoom = Number.NEGATIVE_INFINITY;
+        maxRoom = Number.POSITIVE_INFINITY;
+      } else if (val.houseLevel == 5) {
+        minRoom = val.houseLevel - 1;
+        maxRoom = Number.POSITIVE_INFINITY;
+      } else {
+        minRoom = val.houseLevel - 1;
+        maxRoom = val.houseLevel;
+      }
+      this.filterMsg({ minPrice, maxPrice, minRoom, maxRoom });
+    },
+    searchMsg0(val) {
+      this.keyword(val);
+    }
+  },
+  watch: {
+    currentPage: function(currentPage) {
+      // this.data = this.house_list.slice(
+      //   10 * (currentPage - 1),
+      //   10 * currentPage
+      // );
+    }
+  },
+  computed: {
+    ...mapState(["house_list"])
+  }
+};
+</script>
+<style>
+#house {
+  padding: 5px;
+  margin: 10px;
+}
+.input-with-select {
+  width: 50%;
+}
+.list {
+  width: 70%;
+  padding: 0px 15%;
+}
+.sort {
+  width: 70%;
+  padding: 0px 15%;
+}
+.li {
+  border: 1px dotted #333;
+  margin: -1px;
+  overflow: auto;
+  background-color: white;
+}
+</style>
