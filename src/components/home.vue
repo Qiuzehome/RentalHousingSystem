@@ -1,20 +1,6 @@
 <template>
   <div>
     <div>
-      <header id="header_box">
-        <div class="header_a">
-          <a @click="load">登录</a>
-        </div>
-        <div class="header_a">
-          <a @click="register">注册</a>
-        </div>
-        <div class="header_a">
-          <a @click="out">注销</a>
-        </div>
-        <div class="header_a">
-          <a @click="changeLocation">{{this.location}}</a>
-        </div>
-      </header>
       <el-menu
         :default-active="activeIndex"
         class="el-menu-demo"
@@ -25,7 +11,14 @@
         <el-menu-item index="2" :disabled="Boolean(!this.state)" title="请先登录">我要出租</el-menu-item>
         <el-menu-item index="3" :disabled="Boolean(!this.state)" title="请先登录">房屋管理</el-menu-item>
         <el-menu-item index="4" :disabled="Boolean(!this.state)">个人信息</el-menu-item>
+        <div class="load">
+          <a @click="load">登录</a>
+          <a @click="register">注册</a>
+          <a @click="out">注销</a>
+          <a @click="changeLocation">{{this.location}}</a>
+        </div>
       </el-menu>
+      <button style="position:fixed;right:0;bottom:0" @click="scrollTo">回到顶部</button>
       <el-row v-if="show_home">
         <Houselist></Houselist>
       </el-row>
@@ -41,7 +34,7 @@
     >
       <Load @load_scuess="load_scuess"></Load>
     </el-dialog>
-    <Rank v-if="show_rank" @afterRank="afterRank"></Rank>
+    <Rank v-if="show_rank"></Rank>
     <Regist v-if="show_rigst"></Regist>
     <Personal v-if="show_personal"></Personal>
     <Listout v-if="show_listout"></Listout>
@@ -129,9 +122,6 @@ export default {
         this.show_personal = 1;
       }
     },
-    afterRank() {
-      this.handleSelect(1);
-    },
     register: function() {
       this.$router.push({ path: "/regist" });
     },
@@ -156,6 +146,10 @@ export default {
     },
     changeLocation: function() {
       this.location = "11";
+    },
+    scrollTo() {
+      scrollTo(0, 0);
+      console.log(111);
     }
   },
   computed: {
@@ -172,23 +166,19 @@ export default {
 };
 </script>
 <style scoped>
-#header_box {
-  display: flex;
-  width: 20%;
-  /* float: right; */
-  /* position: absolute; */
-  overflow: auto;
-}
-
-.header_a {
-  padding-left: 10px;
-  font-size: 12px;
-  color: cornflowerblue;
-}
 #location {
   float: right;
   overflow: auto;
   display: none;
+}
+.load {
+  padding-right:20px; 
+  font-size: 15px;
+  float: right;
+  color: cornflowerblue;
+}
+.load a{
+  padding-left: 10px;
 }
 a {
   cursor: pointer;

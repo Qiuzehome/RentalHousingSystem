@@ -24,6 +24,7 @@ const mutations = {
     },
     reset_house_list(state) {
         state.house_list = state._house_list
+
     },
     set_house_list(state, data) {
         state.house_list = data
@@ -89,6 +90,10 @@ const actions = {
             }
         }
         commit("set_house_list", data)
+    },
+    turn_page({ state, commit }, currentPage) {
+        console.log('page')
+        commit("set_house_list", state.house_list.slice(10 * (currentPage - 1), 10 * currentPage))
     }
 }
 

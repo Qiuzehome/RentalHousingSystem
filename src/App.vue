@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
     <transition mode="out-in">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </transition>
   </div>
 </template>
@@ -34,12 +35,6 @@ export default {
   mounted() {
     this.request_house_list();
     this.request_user_list();
-      // this.axios({
-      //       methods: "get",
-      //       url: "/"
-      //   }).then(results => {
-      //       this.$store.state.data = results.data;
-      //   });
   }
 };
 </script>
@@ -52,6 +47,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width: 100%;
 }
 .v-enter,
 .v-leave-to {
@@ -64,6 +60,7 @@ export default {
 }
 body {
   margin-top: -50px;
+   /* background-color:rgba(0.1, 0.1, 0.1, 0.1); */
 }
 a {
   text-decoration: none;

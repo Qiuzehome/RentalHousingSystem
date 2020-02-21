@@ -9,7 +9,7 @@
         <a href="#" @click="height">租金从高到低</a>
       </div>
       <ul>
-        <li v-for="(datas,key) in this.house_list " :key="key" class="li">
+        <li v-for="(datas,key) in this.house_list" :key="key" class="li">
           <House
             :tittle="datas.tittle"
             :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
@@ -22,19 +22,19 @@
         </li>
       </ul>
     </div>
-    <el-pagination
+    <!-- <el-pagination
       background
       layout="prev, pager, next"
-      :total="this.totalPage"
+      :total="this.house_list.length"
       :current-page="this.currentPage"
       @size-change="handleSizeChange"
       @prev-click="handlePrev"
       @next-click="handleNext"
-    ></el-pagination>
+    ></el-pagination> -->
   </div>
 </template>
 <script>
-import { mapState, mapActions,mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 import House from "./house";
 import Search from "./search";
 export default {
@@ -44,22 +44,21 @@ export default {
   },
   data() {
     return {
-      totalPage: this.house_list && this.house_list.length,
       currentPage: 1
     };
   },
   methods: {
-    ...mapActions(["filterMsg","keyword"]),
+    ...mapActions(["filterMsg", "keyword","turn_page"]),
     ...mapMutations(["reset_house_list"]),
-    handleSizeChange(val) {
-      this.currentPage == val;
-    },
-    handlePrev() {
-      this.currentPage -= 1;
-    },
-    handleNext() {
-      this.currentPage += 1;
-    },
+    // handleSizeChange(val) {
+    //   this.currentPage == val;
+    // },
+    // handlePrev() {
+    //   this.currentPage -= 1;
+    // },
+    // handleNext() {
+    //   this.currentPage += 1;
+    // },
     def() {
       this.reset_house_list();
     },
@@ -110,14 +109,13 @@ export default {
       this.keyword(val);
     }
   },
-  watch: {
-    currentPage: function(currentPage) {
-      // this.data = this.house_list.slice(
-      //   10 * (currentPage - 1),
-      //   10 * currentPage
-      // );
-    }
-  },
+  // watch: {
+  //   currentPage: function(currentPage) {
+  //     // console.log('page')
+  //     // return this.house_list.slice(10 * (currentPage - 1), 10 * currentPage);
+  //     this.turn_page(currentPage);
+  //   }
+  // },
   computed: {
     ...mapState(["house_list"])
   }

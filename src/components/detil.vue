@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <el-page-header @back="back"></el-page-header>
-    <div style="width:500px; height:350px;" id="pic">
-      <img v-for="(datas,key) in this.img" :key="key" :src="datas" width="100%" height="100%" />
-    </div>
-    <div id="mes">
-      <strong style=" font-size: 40px">{{this.targetHouse.tittle}}</strong>
-      <p style="color: red">
+  <el-container>
+    <el-header>
+      <el-page-header @back="back"></el-page-header>
+    </el-header>
+    <el-main>
+      <div style="width:500px; height:350px;" id="pic">
+        <img v-for="(datas,key) in this.img" :key="key" :src="datas" width="100%" height="100%" />
+      </div>
+      <p>
+        <strong style=" font-size: 40px">{{this.targetHouse.tittle}}</strong>
+      </p>
+      <p>
         价格：
-        <strong>{{this.price}}/月</strong>
+        <strong style="color: red">{{this.price}}/月</strong>
       </p>
       <p>地点：{{this.location}}</p>
       <p>楼层：{{this.floor}}</p>
@@ -21,8 +25,13 @@
         其他联系方式:
         <strong>{{this.email}}</strong>
       </p>
-    </div>
-  </div>
+      <!-- <div class="coll">
+        <span></span>
+        <p>收藏</p>
+      </div> -->
+    </el-main>
+    <el-footer>请你在实地看房签约之前，不要支付任何费用！谨防诈骗！</el-footer>
+  </el-container>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
@@ -37,6 +46,10 @@ export default {
       floor: null,
       roomTyle: null
     };
+  },
+  beforeRouteLeave(to, from, next) {
+    to.meta.keepAlive = true;
+    next();
   },
   methods: {
     ...mapMutations(["reset_house_list"]),
@@ -80,13 +93,40 @@ export default {
 </script>
 <style scoped>
 #pic {
-  margin: 100px 100px;
+  margin: 100px 0px;
   float: left;
   border: 1px solid;
 }
-#mes {
-  padding-left: 100px;
-  float: left;
-  padding-top: 100px;
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
+  /* background-color: white; */
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+  padding: 10px;
 }
+.el-main {
+  /* background-color:rgba(0.1, 0.1, 0.1, 0.1); */
+  width: 65%;
+  background-color: white;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+  /* border: 1px solid; */
+  margin: 0 auto;
+}
+p{
+  margin-left: 50px;
+  height: 20px;
+  width: 30%;
+  float: left;
+  /* margin: 0 0; */
+}
+.coll {
+  bottom: 20%;
+  right: 20%;
+  position: absolute;
+}
+
 </style>

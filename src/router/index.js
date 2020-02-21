@@ -17,8 +17,11 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: home
-    },{
+      component: home,
+      meta: {
+        keepAlive: true
+      }
+    }, {
       path: '/regist',
       name: 'regist',
       component: regist
@@ -34,29 +37,29 @@ export default new Router({
       component: index
     },
     {
-      path:'/house_list',
-      name:'house_list',
-      component:house_list
+      path: '/house_list',
+      name: 'house_list',
+      component: house_list
     },
     {
-      path:'/detil',
-      name:'detil',
-      component:detil
+      path: '/detil',
+      name: 'detil',
+      component: detil
     },
     {
-      path:'/rank',
-      name:'rank',
-      component:rank
+      path: '/rank',
+      name: 'rank',
+      component: rank
     },
     {
-      path:'/manager',
-      name:'manager',
-      component:manager
-    },{
-      path:'/list_out',
-      name:'list_out',
-      component:list_out
+      path: '/manager',
+      name: 'manager',
+      component: manager
+    }, {
+      path: '/list_out',
+      name: 'list_out',
+      component: list_out
     }
   ]
- 
+
 })

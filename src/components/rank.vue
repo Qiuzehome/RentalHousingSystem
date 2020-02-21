@@ -253,6 +253,27 @@ export default {
         });
         return;
       }
+      if (!reg.price(this.room)) {
+        this.$notify.error({
+          title: "出租失败",
+          message: "请正确填写房屋类型"
+        });
+        return;
+      }
+      if (!reg.price(this.hall)) {
+        this.$notify.error({
+          title: "出租失败",
+          message: "请正确填写房屋类型"
+        });
+        return;
+      }
+      if (!reg.price(this.bathroom)) {
+        this.$notify.error({
+          title: "出租失败",
+          message: "请正确填写房屋类型"
+        });
+        return;
+      }
       if (this.pic.length == 0) {
         this.$notify.error({
           title: "出租失败",
@@ -300,10 +321,7 @@ export default {
           (this.floor = null),
           this.$refs.upload.clearFiles()
         )
-        .then(
-          this.request_house_list()
-        )
-        .then(this.$emit("afterRank"));
+        .then(this.request_house_list());
     },
     check(e, src_on, src, type) {
       // this.facilitiesArr[type]=1;
