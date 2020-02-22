@@ -1,11 +1,22 @@
 <template>
   <div id="house">
     <div class="img" style="width:250px; height:200px; border:1px solid grey;">
-      <img :src="src" @click="see_detail" :id="this.id" width="100%" height="100%" style="cursor:pointer"/>
+      <img
+        :src="src"
+        @click="see_detail"
+        :id="this.id"
+        width="100%"
+        height="100%"
+        style="cursor:pointer"
+      />
     </div>
     <div class="mes">
-      <a href="#"><strong style="color:orange;font-size:30px">{{this.tittle}}</strong></a>
-      <p style="color:red"><b style="font-size:30px">{{this.price}}</b>/月</p>
+      <a href="#">
+        <strong style="color:orange;font-size:30px">{{this.tittle}}</strong>
+      </a>
+      <p style="color:red">
+        <b style="font-size:30px">{{this.price}}</b>/月
+      </p>
       <p>地点：{{this.location}}</p>
       <p>{{this.roomTyle[0]}}室{{this.roomTyle[1]}}厅{{this.roomTyle[2]}}卫</p>
     </div>
@@ -15,7 +26,7 @@
   </div>
 </template>
 <script>
-import {mapMutations} from "vuex"
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {};
@@ -45,19 +56,19 @@ export default {
       type: String,
       default: ""
     },
-    roomTyle:{
-      type:Array,
-      default:()=>[1,2,3]
+    roomTyle: {
+      type: Array,
+      default: () => [1, 2, 3]
     },
-    phone:{
-      type:String,
-      default:'1234567890'
+    phone: {
+      type: String,
+      default: "1234567890"
     }
   },
   methods: {
     ...mapMutations(["set_targetHouse"]),
     see_detail: function(e) {
-      this.set_targetHouse(e.path[0]);
+      this.set_targetHouse(e.target.id);
       this.$router.push({ path: "/detil" });
     }
   }
@@ -68,11 +79,10 @@ export default {
   float: left;
   margin-bottom: 15px;
 }
-.mes{
+.mes {
   display: inline;
 }
-.ranker{
+.ranker {
   float: right;
-  
 }
 </style>

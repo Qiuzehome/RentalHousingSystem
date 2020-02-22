@@ -109,13 +109,6 @@ export default {
       this.keyword(val);
     }
   },
-  // watch: {
-  //   currentPage: function(currentPage) {
-  //     // console.log('page')
-  //     // return this.house_list.slice(10 * (currentPage - 1), 10 * currentPage);
-  //     this.turn_page(currentPage);
-  //   }
-  // },
   computed: {
     ...mapState(["house_list"])
   }

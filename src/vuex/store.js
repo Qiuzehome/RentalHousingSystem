@@ -40,6 +40,13 @@ const mutations = {
     },
     set_targetHouse(state, str) {
         state.targetHouse = str;
+        var length = state.house_list.length;
+        for (let i = 0; i < length; i++) {
+            if (state.house_list[i].id == str) {
+                state.targetHouse = state.house_list[i]
+            }
+        }
+        console.dir(state.targetHouse);
     },
     set_user(state, str) {
         state.user = str;
