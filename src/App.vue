@@ -6,10 +6,10 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="1">首页</el-menu-item>
-      <el-menu-item index="2" :disabled="Boolean(!this.state)" title="请先登录">我要出租</el-menu-item>
-      <el-menu-item index="3" :disabled="Boolean(!this.state)" title="请先登录">房屋管理</el-menu-item>
-      <el-menu-item index="4" :disabled="Boolean(!this.state)">个人信息</el-menu-item>
+      <el-menu-item index="houseList">首页</el-menu-item>
+      <el-menu-item index="rank" :disabled="Boolean(!this.state)" title="请先登录">我要出租</el-menu-item>
+      <el-menu-item index="list_out" :disabled="Boolean(!this.state)" title="请先登录">房屋管理</el-menu-item>
+      <el-menu-item index="personal" :disabled="Boolean(!this.state)">个人信息</el-menu-item>
       <div class="load">
         <a @click="load">登录</a>
         <a @click="register">注册</a>
@@ -28,9 +28,7 @@
       <Load @load_scuess="load_scuess"></Load>
     </el-dialog>
     <transition mode="out-in">
-      <!-- <keep-alive> -->
-        <router-view />
-      <!-- </keep-alive> -->
+      <router-view />
     </transition>
   </div>
 </template>
@@ -42,8 +40,8 @@ export default {
   components: { Load },
   data() {
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
+      activeIndex: this.$route.name,
+      // activeIndex2: "1",
       show_home: 1,
       show_rigst: 0,
       show_rank: 0,
@@ -89,15 +87,15 @@ export default {
       this.dialogFormVisible = false;
     },
     handleSelect(key, keyPath) {
-      if (key == 1) {
+      if (key == "houseList") {
         this.$router.push({ path: "/" });
-      } else if (key == 2) {
+      } else if (key == "rank") {
         this.reset_house_list();
         this.$router.push({ path: "/rank" });
-      } else if (key == "3") {
+      } else if (key == "list_out") {
         this.reset_house_list();
         this.$router.push({ path: "/list_out" });
-      } else if (key == 4) {
+      } else if (key == "personal") {
         this.reset_house_list();
         this.$router.push({ path: "/personal" });
       }
