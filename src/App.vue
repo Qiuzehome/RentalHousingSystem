@@ -28,9 +28,9 @@
       <Load @load_scuess="load_scuess"></Load>
     </el-dialog>
     <transition mode="out-in">
-      <keep-alive>
+      <!-- <keep-alive> -->
         <router-view />
-      </keep-alive>
+      <!-- </keep-alive> -->
     </transition>
   </div>
 </template>
@@ -149,8 +149,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   width: 100%;
+  margin-bottom: 10px;
 }
 .v-enter,
 .v-leave-to {
@@ -162,8 +162,8 @@ export default {
   transition: all 0.8s ease;
 }
 body {
-  margin-top: -50px;
-  /* background-color:rgba(0.1, 0.1, 0.1, 0.1); */
+  /* margin-top: -50px; */
+  background-color: rgba(0.1, 0.1, 0.1, 0.1);
 }
 a {
   text-decoration: none;

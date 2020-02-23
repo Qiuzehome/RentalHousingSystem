@@ -2,13 +2,11 @@
   <el-container>
     <el-main>
       <div style="width:500px; height:350px;" id="pic">
-        <img
-          v-for="(datas,key) in this.targetHouse.img.split(',')"
-          :key="key"
-          :src="datas"
-          width="100%"
-          height="100%"
-        />
+        <el-carousel indicator-position="outside">
+          <el-carousel-item v-for="item in this.targetHouse.img.split(',')" :key="item">
+            <img :src="item" alt width="100%" height="100%" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
       <p>
         <strong style=" font-size: 40px">{{this.targetHouse.tittle}}</strong>
@@ -40,53 +38,13 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
-    return {
-      img: []
-      // price: 0,
-      // location: "广州天河岗顶",
-      // phone: null,
-      // email: null,
-      // floor: null,
-      // roomTyle: null
-    };
+    return {};
   },
   methods: {
     ...mapMutations(["reset_house_list"])
-    // getPic() {
-    //   var houseID = null;
-    //   for (let i = 0; i < this.house_list.length; i++) {
-    //     houseID = this.house_list[i].id;
-    //     if (this.targetHouse.id == houseID) {
-    //       console.log(this.targetHouse.tittle);
-    //       this.targetHouse.tittle = this.house_list[i].tittle;
-    //       this.phone = this.house_list[i].phone;
-    //       this.email = this.house_list[i].email;
-    //       this.price = this.house_list[i].price;
-    //       this.floor = this.house_list[i].floor;
-    //       this.roomTyle = this.house_list[i].room.split("/");
-    //       this.location =
-    //         this.house_list[i].provinces +
-    //         "省" +
-    //         this.house_list[i].city +
-    //         this.house_list[i].area +
-    //         this.house_list[i].location;
-    //     }
-    //   }
-    //   for (let i = 0; i < this.house_list.length; i++) {
-    //     if (this.house_list[i].id == this.targetHouse.id) {
-    //       this.img = this.house_list[i].img.split(",");
-    //     }
-    //   }
-    // }
   },
   computed: {
     ...mapState(["house_list", "targetHouse"])
-  },
-  created() {
-    // this.getPic();
-    for (let i = 0; i < this.house_list.length; i++) {
-      this.img = this.targetHouse.img.split(",");
-    }
   }
 };
 </script>
@@ -114,6 +72,21 @@ export default {
   line-height: 160px;
   /* border: 1px solid; */
   margin: 0 auto;
+}
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 p {
   margin-left: 50px;

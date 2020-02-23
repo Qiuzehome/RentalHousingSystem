@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="personal">
     <table>
       <tr>
         <td>账号</td>
@@ -136,7 +136,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .el-input.is-disabled {
   padding: 0;
 }
@@ -147,7 +147,7 @@ export default {
 }
 table {
   left: 0;
-  margin-left: 30%;
+  margin-left: 20%;
 }
 input.el-input__inner{
   margin: 10px;
@@ -156,6 +156,11 @@ b {
   color: red;
 }
 .sure{
-  margin: 10px;
+  margin: 10px auto;
+}
+.personal{
+  background-color: white;
+  width: 60%;
+  margin: 0 auto;
 }
 </style>
