@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 Vue.use(Vuex)
-const state = { state: 0, user: null, data: null, house_list: [], _house_list: [], targetHouse: null }
+const state = { state: 0, user: null, data: null, house_list: [], _house_list: [], targetHouse: null, page_data: [] }
 const getters = {
     get_state(state, str) {
         return (state.state = str)
@@ -12,9 +12,6 @@ const getters = {
     },
     get_user(state, str) {
         return (state.user = str)
-    },
-    get_house_list(state) {
-        return state.house_list;
     }
 }
 
@@ -32,6 +29,9 @@ const mutations = {
     set__house_list(state) {
         state._house_list = state.house_list
     },
+    set_page_data(state, data) {
+        state.page_data = data
+    },
     set_user_list(state, data) {
         state.data = data
     },
@@ -46,7 +46,6 @@ const mutations = {
                 state.targetHouse = state.house_list[i]
             }
         }
-        console.dir(state.targetHouse);
     },
     set_user(state, str) {
         state.user = str;
@@ -61,6 +60,7 @@ const actions = {
         }).then(results => {
             commit('set_house_list', results.data)
             commit("set__house_list")
+            commit("set_page_data", results.data.slice(0, 10))
         });
     },
     request_user_list({ commit }) {
@@ -86,6 +86,7 @@ const actions = {
             }
         }
         commit("set_house_list", data)
+        commit("set_page_data", data.slice(0, 10))
     },
     keyword({ state, commit }, val) {
         commit("reset_house_list")
@@ -97,10 +98,10 @@ const actions = {
             }
         }
         commit("set_house_list", data)
+        commit("set_page_data", data.slice(0, 10))
     },
     turn_page({ state, commit }, currentPage) {
-        console.log('page')
-        commit("set_house_list", state.house_list.slice(10 * (currentPage - 1), 10 * currentPage))
+        commit("set_page_data", state.house_list.slice(10 * (currentPage - 1), 10 * currentPage))
     }
 }
 

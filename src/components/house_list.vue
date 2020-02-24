@@ -9,7 +9,7 @@
         <a href="#" @click="height">租金从高到低</a>
       </div>
       <ul>
-        <li v-for="(datas,key) in this.house_list" :key="key" class="li">
+        <li v-for="(datas,key) in this.page_data" :key="key" class="li">
           <House
             :tittle="datas.tittle"
             :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
@@ -22,15 +22,13 @@
         </li>
       </ul>
     </div>
-    <!-- <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="this.house_list.length"
-      :current-page="this.currentPage"
-      @size-change="handleSizeChange"
-      @prev-click="handlePrev"
-      @next-click="handleNext"
-    ></el-pagination> -->
+    <div class="block">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="this.house_list.length"
+        @current-change="current"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -48,17 +46,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["filterMsg", "keyword","turn_page"]),
+    ...mapActions(["filterMsg", "keyword", "turn_page"]),
     ...mapMutations(["reset_house_list"]),
-    // handleSizeChange(val) {
-    //   this.currentPage == val;
-    // },
-    // handlePrev() {
-    //   this.currentPage -= 1;
-    // },
-    // handleNext() {
-    //   this.currentPage += 1;
-    // },
+    current(key) {
+      this.turn_page(key);
+    },
     def() {
       this.reset_house_list();
     },
@@ -110,7 +102,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["house_list"])
+    ...mapState(["house_list", "_house_list", "page_data"])
   }
 };
 </script>

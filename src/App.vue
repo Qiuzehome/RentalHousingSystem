@@ -41,7 +41,6 @@ export default {
   data() {
     return {
       activeIndex: this.$route.name,
-      // activeIndex2: "1",
       show_home: 1,
       show_rigst: 0,
       show_rank: 0,
