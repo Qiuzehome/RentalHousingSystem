@@ -50,7 +50,7 @@ export default {
   }
 };
 </script>
-<style >
+<style>
 .radio {
   margin: 10px;
 }

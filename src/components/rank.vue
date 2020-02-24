@@ -348,7 +348,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .el-input__inner {
   margin: 10px;
   /* width: 400px; */
