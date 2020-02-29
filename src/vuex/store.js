@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 Vue.use(Vuex)
-const state = { state: 0, user: null, data: null, house_list: [], _house_list: [], targetHouse: null, page_data: [] }
+const state = { state: 0, user: null, data: null, house_list: [], _house_list: [], targetHouse: null, page_data: [], location: 'aaa', myhouse: [] }
 const getters = {
     get_state(state, str) {
         return (state.state = str)
@@ -49,6 +49,18 @@ const mutations = {
     },
     set_user(state, str) {
         state.user = str;
+    },
+    set_location(state, str) {
+        state.location = str;
+
+    },
+    set_myhouse(state) {
+        state.myhouse = []
+        for (var i in state.house_list) {
+            if (state.house_list[i].landlord == state.user.user) {
+                state.myhouse.push(state.house_list[i])
+            }
+        }
     }
 }
 
@@ -61,6 +73,7 @@ const actions = {
             commit('set_house_list', results.data)
             commit("set__house_list")
             commit("set_page_data", results.data.slice(0, 10))
+            commit("set_myhouse")
         });
     },
     request_user_list({ commit }) {
@@ -102,6 +115,9 @@ const actions = {
     },
     turn_page({ state, commit }, currentPage) {
         commit("set_page_data", state.house_list.slice(10 * (currentPage - 1), 10 * currentPage))
+    },
+    change_location({ state, commit }, newlocation) {
+        commit("set_location", newlocation)
     }
 }
 

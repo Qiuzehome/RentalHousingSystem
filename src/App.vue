@@ -14,7 +14,7 @@
         <a @click="load">登录</a>
         <a @click="register">注册</a>
         <a @click="out">注销</a>
-        <a @click="changeLocation">{{this.location}}</a>
+        <a @click="changeLocation">地址：{{this.location}}</a>
       </div>
     </el-menu>
     <el-dialog
@@ -46,7 +46,6 @@ export default {
       show_rank: 0,
       show_personal: 0,
       show_listout: 0,
-      location: "广东",
       dialogFormVisible: false
     };
   },
@@ -65,12 +64,20 @@ export default {
     });
   },
   computed: {
-    ...mapGetters({ state: "get_state", house_list: "get_house_list" }),
-    ...mapState(["state"])
+    ...mapGetters({
+      state: "get_state",
+      house_list: "get_house_list",
+      location: "get_location"
+    }),
+    ...mapState(["state", "location"])
   },
   methods: {
-    ...mapActions(["request_house_list", "request_user_list"]),
-    ...mapMutations(["set_state", "reset_house_list"]),
+    ...mapActions([
+      "request_house_list",
+      "request_user_list",
+      "change_location"
+    ]),
+    ...mapMutations(["set_state", "reset_house_list", "set_location"]),
     load() {
       if (this.state == 1) {
         this.$notify({
@@ -122,19 +129,16 @@ export default {
       }
     },
     changeLocation: function() {
-      this.location = "11";
+      this.change_location();
     }
   },
   mounted() {
-    this.request_house_list();
-    this.request_user_list();
-    //获取地址
     let script = document.createElement("script");
     script.src = "http://pv.sohu.com/cityjson?ie=utf-8";
     document.body.appendChild(script);
-    script.addEventListener("load", function() {
-      this.location = returnCitySN.cname;
-    });
+    this.request_house_list();
+    this.request_user_list();
+    // this.set_location(returnCitySN.cname);
   }
 };
 </script>
@@ -166,11 +170,11 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
-#location {
+/* #location {
   float: right;
   overflow: auto;
   display: none;
-}
+} */
 .load {
   padding-right: 20px;
   font-size: 15px;
