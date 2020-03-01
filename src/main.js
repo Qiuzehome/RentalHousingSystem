@@ -11,6 +11,7 @@ import axios from 'axios'
 import store from './vuex/store'
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = '/api'
+
 Vue.use(ElementUI, VueAwesomeSwiper, axios);
 
 Vue.config.productionTip = false

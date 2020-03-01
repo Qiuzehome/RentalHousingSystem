@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     ...mapMutations(["set_state", "set_user"]),
+    ...mapActions(["request_myhouse"]),
     load: function() {
       for (let i = 0; i < this.data.length; i++) {
         if (
@@ -35,6 +36,7 @@ export default {
             type: "success"
           });
           this.$emit("load_scuess");
+          this.request_myhouse();
           return;
         }
       }

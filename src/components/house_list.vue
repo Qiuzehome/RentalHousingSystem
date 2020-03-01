@@ -11,6 +11,7 @@
       <ul>
         <li v-for="(datas,key) in this.page_data" :key="key" class="li">
           <House
+            @turn_detil="turn_detil"
             :tittle="datas.tittle"
             :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
             :price="datas.price"
@@ -35,6 +36,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import House from "./house";
 import Search from "./search";
+import bus from '../bus'
 export default {
   components: {
     House,
@@ -48,6 +50,11 @@ export default {
   methods: {
     ...mapActions(["filterMsg", "keyword", "turn_page"]),
     ...mapMutations(["reset_house_list"]),
+    turn_detil() {
+      bus.$emit("turn_detil");
+      // this.activeIndex = "";
+      //app.vue修改参数
+    },
     current(key) {
       this.turn_page(key);
     },

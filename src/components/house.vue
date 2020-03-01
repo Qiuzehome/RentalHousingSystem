@@ -69,6 +69,7 @@ export default {
     ...mapMutations(["set_targetHouse"]),
     see_detail: function(e) {
       this.set_targetHouse(e.target.id);
+      this.$emit("turn_detil")
       this.$router.push({ path: "/detil" });
     }
   }

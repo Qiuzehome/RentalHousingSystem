@@ -24,7 +24,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["house_list", "user","myhouse"]),
+    ...mapState(["house_list", "user", "myhouse"]),
     ...mapActions(["request_house_list"])
   },
   methods: {
@@ -36,15 +36,14 @@ export default {
         params: {
           id: row.id
         }
-      })
-        .then(
-          this.$notify({
-            title: "删除",
-            message: "该房屋已删除",
-            type: "success"
-          })
-        )
-        .then(this.request_house_list());
+      }).then(
+        this.$notify({
+          title: "删除",
+          message: "该房屋已删除",
+          type: "success"
+        }).then(this.request_house_list())
+      );
+      // .then(() => this.request_house_list());
     }
   }
 };

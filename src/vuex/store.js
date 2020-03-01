@@ -55,6 +55,9 @@ const mutations = {
 
     },
     set_myhouse(state) {
+        if (state.user == null) {
+            return
+        }
         state.myhouse = []
         for (var i in state.house_list) {
             if (state.house_list[i].landlord == state.user.user) {
@@ -75,6 +78,14 @@ const actions = {
             commit("set_page_data", results.data.slice(0, 10))
             commit("set_myhouse")
         });
+    },
+    request_myhouse({ commit }) {
+        axios({
+            methods: 'get',
+            url: '/house_list'
+        }).then(
+            commit("set_myhouse")
+        )
     },
     request_user_list({ commit }) {
         axios({

@@ -35,6 +35,7 @@
 <script>
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import Load from "./components/load";
+import bus from "./bus";
 export default {
   name: "App",
   components: { Load },
@@ -139,6 +140,14 @@ export default {
     this.request_house_list();
     this.request_user_list();
     // this.set_location(returnCitySN.cname);
+  },
+  created() {
+    bus.$on("turn_detil", () => {
+      this.activeIndex = "";
+    });
+  },
+  beforeDestroy() {
+    bus.$off("turn_detil");
   }
 };
 </script>
