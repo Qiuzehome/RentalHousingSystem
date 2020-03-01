@@ -14,7 +14,7 @@
         <a @click="load">登录</a>
         <a @click="register">注册</a>
         <a @click="out">注销</a>
-        <a @click="changeLocation">地址：{{this.location}}</a>
+        <!-- <a @click="changeLocation">地址：{{this.location}}</a> -->
       </div>
     </el-menu>
     <el-dialog
