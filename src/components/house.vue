@@ -75,7 +75,7 @@ export default {
   }
 };
 </script>
-<style>
+<style >
 .img {
   float: left;
   margin-bottom: 15px;

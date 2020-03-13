@@ -113,7 +113,7 @@ export default {
   }
 };
 </script>
-<style>
+<style >
 #house {
   padding: 5px;
   margin: 10px;

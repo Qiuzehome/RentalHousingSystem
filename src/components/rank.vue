@@ -349,9 +349,9 @@ export default {
 };
 </script>
 <style scoped>
-.el-input__inner {
+.house_type.el-input__inner {
   margin: 10px;
-  /* width: 400px; */
+  width: 100px;
 }
 div.el-input {
   width: 400px;

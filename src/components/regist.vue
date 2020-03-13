@@ -161,7 +161,7 @@ export default {
 };
 </script>
 <style>
-.el-input__inner {
+ .el-input__inner {
   width: 30%;
   margin: 10px;
 }

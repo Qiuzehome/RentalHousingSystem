@@ -60,13 +60,13 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .el-input__inner {
   margin: 10px;
   width: 400px;
 }
 .el-button {
-  margin-left: 40%;
   text-align: center;
+  margin:10px 40% 0;
 }
 </style>

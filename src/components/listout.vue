@@ -43,7 +43,6 @@ export default {
           type: "success"
         }).then(this.request_house_list())
       );
-      // .then(() => this.request_house_list());
     }
   }
 };
