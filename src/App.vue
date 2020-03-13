@@ -115,12 +115,15 @@ export default {
       if (this.state == 1) {
         this.set_state();
         this.user = null;
-
+        this.houseList = "houseList";
         this.$notify({
           title: "注销成功",
           message: "当前以退出登录状态",
           type: "success"
         });
+        // this.$router.push({ path: "/" });
+        this.activeIndex = "houseList";
+        this.handleSelect('houseList','houseList')
       } else {
         this.$notify({
           title: "注销失败",

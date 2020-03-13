@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-input type="text" placeholder="账号" v-model="user" />
+    <el-input type="text" placeholder="账号" v-model="user"  style="width=30%;"/>
     <b v-if="is_user" ref="err_user">{{this.err_user}}</b>
     <el-input type="password" placeholder="密码" v-model="psw" />
     <el-input type="password" placeholder="再次输入密码" v-model="psw0" ref="psw" />
@@ -11,7 +11,7 @@
     <el-input type="text" placeholder="邮箱" v-model="email" />
     <b v-if="is_email">请输入正确邮箱</b>
     <el-button @click="regist">确定并注册</el-button>
-    <a @click="goback" id="a">已有账号，返回登录界面登录</a>
+    <!-- <a @click="goback" id="a">已有账号，返回登录界面登录</a> -->
   </div>
 </template>
 <script>
@@ -160,7 +160,12 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.container{
+  /* background-color: red; */
+  width: 50%;
+  margin: 0 auto;
+}
  .el-input__inner {
   width: 30%;
   margin: 10px;

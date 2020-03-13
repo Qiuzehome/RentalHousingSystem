@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dd>
+   <dd>
       <span>位置:</span>
       <el-select v-model="province" placeholder="请选择省份" id="select" @change="currentSel">
         <el-option v-for="datas,key in provinceobj  " :key="key" :label="datas" :value="datas"></el-option>
@@ -12,7 +12,7 @@
         <el-option v-for="datas,key in areaobj" :key="key" :label="datas" :value="datas"></el-option>
       </el-select>
       <el-input type="text" placeholder="详细位置" v-model="location" id="location" />
-    </dd>
+     </dd>
     <dd class="house_type">
       <span>房型:</span>
       <el-input type="text" v-model="room" />
@@ -26,7 +26,7 @@
       <span>楼层:</span>
       <el-input type="text" v-model="floor" style="width:250px" />
     </dd>
-    <dd>
+    <!-- <dd>
       <span>房屋设施:</span>
       <div id="facilities">
         <label
@@ -41,7 +41,7 @@
           <span>{{datas.name}}</span>
         </label>
       </div>
-    </dd>
+    </dd> -->
     <dd>
       <span>月租:</span>
       <el-input type="text" placeholder="月租" v-model="price" style="width:250px" />
@@ -49,7 +49,7 @@
       <el-select v-model="time_limit" placeholder="起租时长" id="select">
         <el-option v-for="datas,key in datelength  " :key="key" :label="datas" :value="datas"></el-option>
       </el-select>
-    </dd>
+     </dd>
     <span>标题:</span>
     <el-input type="text" placeholder="标题" v-model="tittle" />
     <el-form :model="form">
@@ -323,14 +323,14 @@ export default {
         )
         .then(this.request_house_list());
     },
-    check(e, src_on, src, type) {
-      // this.facilitiesArr[type]=1;
-      console.log(this.facilitiesArr[type]);
-      e.target.src == src
-        ? ((e.target.src = src_on), (this.facilitiesArr[type] = 0))
-        : ((e.target.src = src), (this.facilitiesArr[type] = 1));
-      console.log(this.facilitiesArr[type]);
-    }
+    // check(e, src_on, src, type) {
+    //   // this.facilitiesArr[type]=1;
+    //   console.log(this.facilitiesArr[type]);
+    //   e.target.src == src
+    //     ? ((e.target.src = src_on), (this.facilitiesArr[type] = 0))
+    //     : ((e.target.src = src), (this.facilitiesArr[type] = 1));
+    //   console.log(this.facilitiesArr[type]);
+    // }
   },
   created() {
     for (let i = 0; i < location.provinceList.length; i++) {
@@ -377,12 +377,10 @@ dd {
 }
 #facilities {
   display: flex;
-  /* vertical-align: middle; */
   padding-left: 25%;
 }
 label {
   margin: 5px;
-  /* width: 50px; */
 }
 span {
   display: inline;

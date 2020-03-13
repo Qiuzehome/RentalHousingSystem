@@ -9,7 +9,7 @@
         </el-carousel>
       </div>
       <p>
-        <strong style=" font-size: 40px">{{this.targetHouse.tittle}}</strong>
+        <strong style=" font-size: 30px">{{this.targetHouse.tittle}}</strong>
       </p>
       <p>
         价格：
