@@ -59,12 +59,12 @@ import reg from "../reg";
 export default {
   data() {
     return {
-      user: this.$store.state.user.user,
-      name: this.$store.state.user.name,
+      user: null,
+      name: null,
       psw: null,
       psw0: null,
-      email: this.$store.state.user.email,
-      phone: this.$store.state.user.phone,
+      email: null,
+      phone: null,
       err_psw: 0,
       err_phone: 0,
       err_email: 0,
@@ -89,15 +89,38 @@ export default {
           methods: "post",
           url: "/re_personal",
           params: {
-            user: this.$store.state.user.user,
+            user: this.user,
             name: this.name,
             psw: this.psw,
             email: this.email,
             phone: this.phone
           }
-        });
+        }).then(
+          this.$notify({
+            title: "修改成功",
+            message: "用户信息修改成功",
+            type: "success"
+          })
+        );
       }
+    },
+    getMsg() {
+      this.axios({
+        url: "/getPersonal",
+        methods: "get",
+        params: {
+          user: window.document.cookie.split("=")[1]
+        }
+      }).then(res => {
+        this.user = res.data.user;
+        this.name = res.data.name;
+        this.email = res.data.email;
+        this.phone = res.data.phone;
+      });
     }
+  },
+  mounted() {
+    this.getMsg();
   },
   watch: {
     phone: function(phone) {
@@ -149,16 +172,16 @@ table {
   left: 0;
   margin-left: 20%;
 }
-input.el-input__inner{
+input.el-input__inner {
   margin: 10px;
 }
 b {
   color: red;
 }
-.sure{
+.sure {
   margin: 10px auto;
 }
-.personal{
+.personal {
   background-color: white;
   width: 60%;
   margin: 0 auto;

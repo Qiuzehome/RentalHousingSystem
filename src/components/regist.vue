@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <el-input type="text" placeholder="账号" v-model="user"  style="width=30%;"/>
+    <el-input type="text" placeholder="账号" v-model="user" style="width=30%;" />
     <b v-if="is_user" ref="err_user">{{this.err_user}}</b>
     <el-input type="password" placeholder="密码" v-model="psw" />
     <el-input type="password" placeholder="再次输入密码" v-model="psw0" ref="psw" />
@@ -16,7 +16,7 @@
 </template>
 <script>
 import reg from "../reg";
-import { mapState,mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -47,24 +47,23 @@ export default {
       }
     },
     regist: function() {
-      for (let i = 0; i < this.data.length; i++) {
-        if (this.data[i].user == this.user) {
-          this.$notify.error({
-            title: "注册失败",
-            message: "该账号已被注册"
-          });
-          this.user = null;
-          return;
-        }
-      }
+      // for (let i = 0; i < this.data.length; i++) {
+      //   if (this.data[i].user == this.user) {
+      //     this.$notify.error({
+      //       title: "注册失败",
+      //       message: "该账号已被注册"
+      //     });
+      //     this.user = null;
+      //     return;
+      //   }
+      // }
       if (this.is_phone == 1 || this.is_email == 1) {
         this.$notify.error({
           title: "注册失败",
           message: "请正确填写信息"
         });
         return;
-      }
-      if (
+      } else if (
         this.psw0 == null ||
         this.psw == null ||
         this.user == null ||
@@ -78,34 +77,42 @@ export default {
           type: "warning"
         });
         return;
-      }
-      if (this.psw != this.psw0) {
+      } else if (this.psw != this.psw0) {
         this.$notify({
           title: "注册失败",
           message: "两次输入密码不一致",
           type: "warning"
         });
         return;
-      }
-      this.axios({
-        methods: "post",
-        url: "/regist",
-        params: {
-          user: this.user,
-          password: this.psw,
-          name: this.name,
-          phone: this.phone,
-          email: this.email
-        }
-      }).then(result => {
-        this.$notify({
-          title: "注册成功",
-          message: "注册成功，请前往主界面登录",
-          type: "success"
+      } else {
+        this.axios({
+          methods: "post",
+          url: "/regist",
+          params: {
+            user: this.user,
+            password: this.psw,
+            name: this.name,
+            phone: this.phone,
+            email: this.email
+          }
+        }).then(result => {
+          console.log(result);
+          if (result.data == false) {
+            this.$notify.error({
+              tittle: "注册失败",
+              message: "该账号已经被注册"
+            });
+          } else {
+            this.$notify({
+              title: "注册成功",
+              message: "注册成功，请前往主界面登录",
+              type: "success"
+            });
+            this.$router.push({ path: "/" });
+            location.reload();
+          }
         });
-        this.$router.push({ path: "/" });
-        location.reload();
-      });
+      }
     }
   },
   computed: {
@@ -128,20 +135,24 @@ export default {
     },
     user: function(user) {
       if (user.length < 6 && user != "") {
+        console.log();
         this.is_user = 1;
         this.err_user = "账号长度不得少于6";
         return;
       } else {
-        for (let i = 0; i < this.data.length; i++) {
-          if (this.data[i].user == user) {
-            this.is_user = 1;
-            this.err_user = "该账号已被注册";
-            return;
-          } else {
-            this.is_user = 0;
-          }
-        }
+        this.is_user = 0;
       }
+      // else {
+      //   for (let i = 0; i < this.data.length; i++) {
+      //     if (this.data[i].user == user) {
+      //       this.is_user = 1;
+      //       this.err_user = "该账号已被注册";
+      //       return;
+      //     } else {
+      //       this.is_user = 0;
+      //     }
+      //   }
+      // }
     },
     psw0: function(psw0) {
       if (this.psw != psw0 && this.psw != null && psw0 != null) {
@@ -161,12 +172,12 @@ export default {
 };
 </script>
 <style scoped>
-.container{
+.container {
   /* background-color: red; */
   width: 50%;
   margin: 0 auto;
 }
- .el-input__inner {
+.el-input__inner {
   width: 30%;
   margin: 10px;
 }

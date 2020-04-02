@@ -9,6 +9,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
 import store from './vuex/store'
+import Cookies from 'js-cookie'
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = '/api'
 

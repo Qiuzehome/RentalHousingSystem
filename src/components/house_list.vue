@@ -1,5 +1,5 @@
 <template>
-  <div style="background: rgba(0.1, 0.1, 0.1, 0.1);">
+  <div style="  background-color:white;">
     <Search @searchMsg="searchMsg" @searchMsg0="searchMsg0"></Search>
     <div class="list">
       <div class="sort">
@@ -8,20 +8,22 @@
         <a href="#" @click="low">租金从低到高</a>
         <a href="#" @click="height">租金从高到低</a>
       </div>
-      <ul>
-        <li v-for="(datas,key) in this.page_data" :key="key" class="li">
-          <House
-            @turn_detil="turn_detil"
-            :tittle="datas.tittle"
-            :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
-            :price="datas.price"
-            :id="datas.id"
-            :src="datas.img.split(',')[0]"
-            :phone="datas.phone"
-            :roomTyle="datas.room.split('/')"
-          ></House>
-        </li>
-      </ul>
+      <div class="houselist">
+        <ul>
+          <li v-for="(datas,key) in this.page_data" :key="key" class="li">
+            <House
+              @turn_detil="turn_detil"
+              :tittle="datas.tittle"
+              :location="datas.provinces+'省'+datas.city+datas.area+datas.location"
+              :price="datas.price"
+              :id="datas.id"
+              :src="datas.img.split(',')[0]"
+              :phone="datas.phone"
+              :roomTyle="datas.room.split('/')"
+            ></House>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="block">
       <el-pagination
@@ -36,7 +38,7 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import House from "./house";
 import Search from "./search";
-import bus from '../bus'
+import bus from "../bus";
 export default {
   components: {
     House,
@@ -48,7 +50,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["filterMsg", "keyword", "turn_page"]),
+    ...mapActions(["filterMsg", "keyword", "turn_page", "request_house_list"]),
     ...mapMutations(["reset_house_list"]),
     turn_detil() {
       bus.$emit("turn_detil");
@@ -107,6 +109,9 @@ export default {
     searchMsg0(val) {
       this.keyword(val);
     }
+  },
+  mounted() {
+    this.request_house_list();
   },
   computed: {
     ...mapState(["house_list", "_house_list", "page_data"])

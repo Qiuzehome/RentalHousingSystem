@@ -7,9 +7,9 @@
       @select="handleSelect"
     >
       <el-menu-item index="houseList">首页</el-menu-item>
-      <el-menu-item index="rank" :disabled="Boolean(!this.state)" title="请先登录">我要出租</el-menu-item>
-      <el-menu-item index="list_out" :disabled="Boolean(!this.state)" title="请先登录">房屋管理</el-menu-item>
-      <el-menu-item index="personal" :disabled="Boolean(!this.state)">个人信息</el-menu-item>
+      <el-menu-item index="rank" :disabled="Boolean(!this.loadState)" title="请先登录">我要出租</el-menu-item>
+      <el-menu-item index="list_out" :disabled="Boolean(!this.loadState)" title="请先登录">房屋管理</el-menu-item>
+      <el-menu-item index="personal" :disabled="Boolean(!this.loadState)">个人信息</el-menu-item>
       <div class="load">
         <a @click="load">登录</a>
         <a @click="register">注册</a>
@@ -36,6 +36,7 @@
 import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
 import Load from "./components/load";
 import bus from "./bus";
+import cookie from "./cookie";
 export default {
   name: "App",
   components: { Load },
@@ -47,6 +48,7 @@ export default {
       show_rank: 0,
       show_personal: 0,
       show_listout: 0,
+      loadState: cookie.getCookie(),
       dialogFormVisible: false
     };
   },
@@ -75,12 +77,11 @@ export default {
   methods: {
     ...mapActions([
       "request_house_list",
-      "request_user_list",
       "change_location"
     ]),
     ...mapMutations(["set_state", "reset_house_list", "set_location"]),
     load() {
-      if (this.state == 1) {
+      if (cookie.getCookie()) {
         this.$notify({
           title: "登录失败",
           message: "请先注销当前账号",
@@ -92,6 +93,7 @@ export default {
     },
     load_scuess() {
       this.dialogFormVisible = false;
+      location.reload();
     },
     handleSelect(key, keyPath) {
       if (key == "houseList") {
@@ -112,18 +114,17 @@ export default {
     },
 
     out: function() {
-      if (this.state == 1) {
-        this.set_state();
-        this.user = null;
-        this.houseList = "houseList";
+      if (cookie.getCookie()) {
         this.$notify({
           title: "注销成功",
-          message: "当前以退出登录状态",
+          message: "当前已退出登录状态",
           type: "success"
         });
-        // this.$router.push({ path: "/" });
-        this.activeIndex = "houseList";
-        this.handleSelect('houseList','houseList')
+        setTimeout(() => {
+          cookie.clearCookie();
+          this.$router.push({ path: "/" });
+          window.location.reload();
+        }, 1000);
       } else {
         this.$notify({
           title: "注销失败",
@@ -141,7 +142,6 @@ export default {
     script.src = "http://pv.sohu.com/cityjson?ie=utf-8";
     document.body.appendChild(script);
     this.request_house_list();
-    this.request_user_list();
     // this.set_location(returnCitySN.cname);
   },
   created() {

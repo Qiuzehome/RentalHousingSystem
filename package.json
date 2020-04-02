@@ -19,6 +19,7 @@
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.2.1",
     "mysql": "^2.17.1",
     "node-uuid": "^1.4.8",
     "s": "^1.0.0",

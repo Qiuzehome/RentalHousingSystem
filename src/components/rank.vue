@@ -1,6 +1,6 @@
 <template>
-  <div>
-   <dd>
+  <div style="background-color:white;">
+    <dd>
       <span>位置:</span>
       <el-select v-model="province" placeholder="请选择省份" id="select" @change="currentSel">
         <el-option v-for="datas,key in provinceobj  " :key="key" :label="datas" :value="datas"></el-option>
@@ -12,7 +12,7 @@
         <el-option v-for="datas,key in areaobj" :key="key" :label="datas" :value="datas"></el-option>
       </el-select>
       <el-input type="text" placeholder="详细位置" v-model="location" id="location" />
-     </dd>
+    </dd>
     <dd class="house_type">
       <span>房型:</span>
       <el-input type="text" v-model="room" />
@@ -41,7 +41,7 @@
           <span>{{datas.name}}</span>
         </label>
       </div>
-    </dd> -->
+    </dd>-->
     <dd>
       <span>月租:</span>
       <el-input type="text" placeholder="月租" v-model="price" style="width:250px" />
@@ -49,7 +49,7 @@
       <el-select v-model="time_limit" placeholder="起租时长" id="select">
         <el-option v-for="datas,key in datelength  " :key="key" :label="datas" :value="datas"></el-option>
       </el-select>
-     </dd>
+    </dd>
     <span>标题:</span>
     <el-input type="text" placeholder="标题" v-model="tittle" />
     <el-form :model="form">
@@ -78,17 +78,22 @@
         <el-button size="small">取消</el-button>
       </el-form-item>
     </el-form>
-    <el-button @click="rank">确定出租</el-button>
+    <el-button @click="rank" style="margin-bottom: 10px;">确定出租</el-button>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
 import location from "../location";
 import reg from "../reg";
-import Facilities from "../assets/Facilities";
+// import Facilities from "../assets/Facilities";
+import cookie from "../cookie";
 export default {
   data() {
     return {
+      landlord: null,
+      phone: null,
+      email: null,
+      userid: null,
       location: null,
       price: null,
       tittle: null,
@@ -124,9 +129,9 @@ export default {
       province: null,
       area: null,
       pic: [],
-      is_price: null,
-      facilitiesObj: Facilities.Facilities,
-      facilitiesArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      is_price: null
+      // facilitiesObj: Facilities.Facilities,
+      // facilitiesArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     };
   },
   computed: {
@@ -220,12 +225,25 @@ export default {
               this.areaobj.splice(a, 1);
             }
           }
-
           return;
         } else {
           continue;
         }
       }
+    },
+    getMsg() {
+      this.axios({
+        url: "/getPersonal",
+        methods: "get",
+        params: {
+          user: window.document.cookie.split("=")[1]
+        }
+      }).then(res => {
+        this.userid = res.data.user;
+        this.landlord = res.data.name;
+        this.email = res.data.email;
+        this.phone = res.data.phone;
+      });
     },
     rank() {
       if (
@@ -285,20 +303,24 @@ export default {
         methods: "post",
         url: "/rank",
         params: {
+          userid: this.userid,
+          landlord: this.landlord,
+          email: this.email,
+          phone: this.phone,
+
           location: this.location,
           price: this.price,
           tittle: this.tittle,
-          user: this.user.user,
-          phone: this.user.phone,
-          email: this.user.email,
+          // user: this.user.user,
+          // phone: this.user.phone,
+          // email: this.user.email,
           city: this.city,
           provinces: this.province,
           area: this.area,
           time_limit: this.time_limit,
           pic: this.pic.join(","),
           room: this.room + "/" + this.bathroom + "/" + this.hall,
-          floor: this.floor,
-          facilities: this.facilitiesArr
+          floor: this.floor
         }
       })
         .then(
@@ -322,15 +344,10 @@ export default {
           this.$refs.upload.clearFiles()
         )
         .then(this.request_house_list());
-    },
-    // check(e, src_on, src, type) {
-    //   // this.facilitiesArr[type]=1;
-    //   console.log(this.facilitiesArr[type]);
-    //   e.target.src == src
-    //     ? ((e.target.src = src_on), (this.facilitiesArr[type] = 0))
-    //     : ((e.target.src = src), (this.facilitiesArr[type] = 1));
-    //   console.log(this.facilitiesArr[type]);
-    // }
+    }
+  },
+  mounted() {
+    this.getMsg();
   },
   created() {
     for (let i = 0; i < location.provinceList.length; i++) {
@@ -355,19 +372,13 @@ export default {
 }
 div.el-input {
   width: 400px;
-}
-.el-select .el-input {
-  width: 130px;
-}
-.input-with-select .el-input-group__prepend {
-  background-color: #fff;
-}
-#select {
-  width: 120px;
-  margin: 20px;
+  margin: 10px;
 }
 dd {
   text-align: center;
+}
+.el-select {
+  width: 120px;
 }
 #location {
   display: inline;
