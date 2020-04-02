@@ -24,23 +24,6 @@ export default {
     ...mapMutations(["set_state", "set_user"]),
     ...mapActions(["request_myhouse"]),
     load: function() {
-      // for (let i = 0; i < this.data.length; i++) {
-      //   if (
-      //     this.user == this.data[i].user &&
-      //     this.password == this.data[i].password
-      //   ) {
-      //     this.set_state();
-      //     this.set_user(this.data[i]);
-      //     this.$notify({
-      //       title: "登录成功",
-      //       message: "欢迎使用房屋租赁系统",
-      //       type: "success"
-      //     });
-      //     this.$emit("load_scuess");
-      //     this.request_myhouse();
-      //     return;
-      //   }
-      // }
       if (this.user != null && this.password != null) {
         this.axios({
           methods: "get",

@@ -13,12 +13,13 @@ const getCookie = function () {
     }
 }
 const clearCookie = function () {
-    this.setCookie("", -1);
+    this.setCookie("",  -1);
 }
 const setCookie = function (c_name, exdays) {
     var exdate = new Date(); //获取时间
     exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays);
     window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+    // window.document.cookie = "usertype" + "=" + usertype + ";path=/;expires=" + exdate.toGMTString();
 }
 export default {
     getCookie, clearCookie, setCookie
