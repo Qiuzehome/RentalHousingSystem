@@ -2,12 +2,12 @@
   <div style="  background-color:white;">
     <Search @searchMsg="searchMsg" @searchMsg0="searchMsg0"></Search>
     <div class="list">
-      <div class="sort">
+      <!-- <div class="sort">
         <span>排序</span>
         <a href="#" @click="def">默认</a>
         <a href="#" @click="low">租金从低到高</a>
         <a href="#" @click="height">租金从高到低</a>
-      </div>
+      </div> -->
       <div class="houselist">
         <ul>
           <li v-for="(datas,key) in this.page_data" :key="key" class="li">

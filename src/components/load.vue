@@ -40,7 +40,7 @@ export default {
               type: "success"
             });
 
-            cookie.setCookie(this.user, 7);
+            cookie.setCookie(this.user);
             setTimeout(() => {
               this.$emit("load_scuess");
             }, 1000);
